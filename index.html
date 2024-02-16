@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>System</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .box {
+            border: none;
+        }
+
+        .box.active {
+            border: 1px solid black;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="option">
+            <h1>Choose an option</h1>
+        </div>
+        <div class="box" id="box1">
+            <a href="shutdown.html">
+                <img src="media/arrow.png" alt="">
+                <div class="con">
+                    <h2>Continue</h2>
+                    <h3>Exit and Continue to Windows 10</h3>
+                </div>
+            </a>
+        </div>
+        <div class="box" id="box2">
+            <a href="troubleshoot.html">
+                <img src="media/tool.png" alt="">
+                <div class="con">
+                    <h2>Troubleshoot</h2>
+                    <h3>Reset your PC or see advanced options</h3>
+                </div>
+            </a>
+        </div>
+        <div class="box" id="box3">
+            <a href="shutdown.html">
+                <img src="media/power.png" alt="">
+                <h2>Turn off your PC</h2>
+            </a>
+        </div>
+    </div>
+
+    <script>
+        const boxes = document.querySelectorAll('.box');
+        let activeBoxIndex = 0;
+
+        function moveBorder(event) {
+            boxes.forEach(box => {
+                box.classList.remove('active');
+            });
+
+            const currentBox = event.currentTarget;
+            currentBox.classList.add('active');
+            activeBoxIndex = Array.from(boxes).indexOf(currentBox);
+        }
+
+        function handleKeyPress(event) {
+            if (event.code === 'Space' || event.code === 'Enter') {
+                event.preventDefault();
+                const nextBoxIndex = (activeBoxIndex + 1) % boxes.length;
+                moveBorder({ currentTarget: boxes[nextBoxIndex] });
+            }
+        }
+
+        boxes.forEach(box => {
+            box.addEventListener('mouseover', moveBorder);
+            box.addEventListener('click', moveBorder);
+        });
+
+        document.addEventListener('keydown', handleKeyPress);
+    </script>
+</body>
+</html>
